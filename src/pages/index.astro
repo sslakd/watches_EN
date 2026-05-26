@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Watch Stories" description="Every watch has a story. Discover timepieces that speak to you — curated stories of craftsmanship, heritage, and moments that matter.">
+  <div class="hero">
+    <div class="subtitle">Curated Timepieces</div>
+    <h1>Every Watch Has a Story</h1>
+    <p>We believe a watch is more than an instrument. It's a companion through moments that matter — a silent witness to your story. Discover our curated collection of timepieces, each with a story worth telling.</p>
+    <a href="/watches" class="btn" style="margin-top: 2rem;">Explore Stories</a>
+  </div>
+
+  <div style="text-align: center; padding: var(--spacing-lg) 0;">
+    <h2>Featured Stories</h2>
+    <p style="color: var(--color-muted);">Coming soon — our curated collection of timepieces and their stories.</p>
+  </div>
+
+  <div class="card-grid" id="featured-watches"></div>
+</BaseLayout>
+
+<script>
+  // Will be hydrated by build-time data pipeline
+  console.log('Watch Stories — coming alive');
+</script>
