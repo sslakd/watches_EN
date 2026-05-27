@@ -3,6 +3,7 @@ export interface Props {
   title: string;
   description: string;
 }
+
 const { title, description } = Astro.props;
 ---
 
@@ -11,113 +12,186 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} — Watch Stories</title>
+    <title>{title} | Watch Stories</title>
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
         --font-serif: 'Playfair Display', Georgia, serif;
-        --font-sans: 'Inter', -apple-system, sans-serif;
-        --color-bg: #faf8f5;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --color-bg: #fbfaf7;
+        --color-surface: #ffffff;
+        --color-soft: #f2eee8;
         --color-text: #1a1a1a;
+        --color-subtle: #4f4a45;
         --color-accent: #c9a84c;
-        --color-muted: #888;
-        --color-border: #e8e3dd;
+        --color-accent-dark: #9e7c21;
+        --color-muted: #7d7770;
+        --color-border: #e5ded4;
         --spacing-sm: 0.5rem;
         --spacing-md: 1.5rem;
         --spacing-lg: 3rem;
         --spacing-xl: 6rem;
+        --spacing-2xl: 9rem;
+        --container: 1180px;
       }
-      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
       body {
+        margin: 0;
         font-family: var(--font-sans);
         font-weight: 300;
         color: var(--color-text);
         background: var(--color-bg);
         line-height: 1.7;
       }
-      .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing-md); }
-      nav {
-        padding: var(--spacing-lg) 0;
+      img { display: block; max-width: 100%; }
+      a { color: inherit; }
+      p { margin: 0; }
+      h1, h2, h3, h4 { margin: 0; font-family: var(--font-serif); font-weight: 400; }
+      h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.02; }
+      h2 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.12; }
+      h3 { font-size: 1.25rem; }
+
+      .site-shell { min-height: 100vh; display: flex; flex-direction: column; }
+      .container { width: min(var(--container), calc(100% - 2rem)); margin: 0 auto; }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(251, 250, 247, 0.92);
         border-bottom: 1px solid var(--color-border);
-        display: flex; justify-content: space-between; align-items: center;
+        backdrop-filter: blur(14px);
       }
-      nav .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--color-text); text-decoration: none; letter-spacing: -0.5px; }
-      nav .logo span { color: var(--color-accent); }
-      nav a { color: var(--color-muted); text-decoration: none; font-size: 0.9rem; margin-left: var(--spacing-md); transition: color 0.2s; text-transform: uppercase; letter-spacing: 1px; }
-      nav a:hover { color: var(--color-text); }
-      footer {
+      nav {
+        min-height: 72px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .logo {
+        font-family: var(--font-serif);
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--color-text);
+        text-decoration: none;
+      }
+      .logo span { color: var(--color-accent-dark); }
+      .nav-links { display: flex; align-items: center; gap: 1.25rem; }
+      .nav-links a {
+        color: var(--color-muted);
+        text-decoration: none;
+        font-size: 0.76rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover { color: var(--color-text); }
+      main { flex: 1; }
+
+      .eyebrow {
+        color: var(--color-accent-dark);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border: 1px solid var(--color-text);
+        padding: 0.8rem 1.35rem;
+        text-decoration: none;
+        color: var(--color-text);
+        background: transparent;
+        font-size: 0.76rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .btn:hover { background: var(--color-text); color: var(--color-bg); }
+      .btn-primary { background: var(--color-text); color: white; }
+      .btn-primary:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
+      .page-hero {
         text-align: center;
-        padding: var(--spacing-xl) 0;
+        padding: 7rem 0 4rem;
+      }
+      .page-hero p {
+        max-width: 660px;
+        margin: 1.25rem auto 0;
+        color: var(--color-muted);
+        font-size: 1rem;
+      }
+
+      footer {
+        padding: 4rem 0;
         border-top: 1px solid var(--color-border);
         color: var(--color-muted);
         font-size: 0.85rem;
+        background: var(--color-surface);
       }
-      footer .brand { font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-text); margin-bottom: var(--spacing-sm); }
-      h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; }
-      h1 { font-size: 3rem; line-height: 1.2; margin-bottom: var(--spacing-md); }
-      h2 { font-size: 2rem; margin-bottom: var(--spacing-md); }
-      .hero {
-        text-align: center;
-        padding: var(--spacing-xl) 0 var(--spacing-lg);
-        max-width: 700px;
-        margin: 0 auto;
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 2rem;
       }
-      .hero .subtitle {
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        color: var(--color-accent);
-        margin-bottom: var(--spacing-md);
-      }
-      .hero p { color: var(--color-muted); font-size: 1.1rem; max-width: 550px; margin: var(--spacing-md) auto 0; }
-      .btn {
-        display: inline-block;
-        border: 1px solid var(--color-text);
-        padding: 0.8rem 2rem;
-        text-decoration: none;
+      footer .brand {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
         color: var(--color-text);
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        transition: all 0.3s;
+        margin-bottom: 0.35rem;
       }
-      .btn:hover { background: var(--color-text); color: var(--color-bg); }
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: var(--spacing-lg);
-        padding: var(--spacing-lg) 0;
+
+      @media (max-width: 700px) {
+        .container { width: min(100% - 1.25rem, var(--container)); }
+        nav {
+          min-height: 64px;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.75rem 0;
+        }
+        .nav-links { width: 100%; justify-content: space-between; gap: 0.75rem; }
+        .footer-inner { flex-direction: column; }
+        .page-hero { padding: 4.5rem 0 2.5rem; }
       }
-      .card {
-        text-decoration: none;
-        color: inherit;
-        transition: transform 0.3s;
-      }
-      .card:hover { transform: translateY(-4px); }
-      .card img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--color-border); margin-bottom: var(--spacing-sm); }
-      .card h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
-      .card .price { font-family: var(--font-serif); color: var(--color-accent); font-size: 1.1rem; font-style: italic; }
-      .card .brand { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-muted); margin-bottom: 0.25rem; }
     </style>
   </head>
   <body>
-    <div class="container">
-      <nav>
-        <a href="/" class="logo">Watch<span>Stories</span></a>
-        <div>
-          <a href="/">Stories</a>
-          <a href="/watches">Watches</a>
-          <a href="/about">About</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="container">
+          <nav aria-label="Primary navigation">
+            <a href="/" class="logo">Watch<span>Stories</span></a>
+            <div class="nav-links">
+              <a href="/">Stories</a>
+              <a href="/watches">Watches</a>
+              <a href="/about">About</a>
+            </div>
+          </nav>
         </div>
-      </nav>
-      <slot />
+      </header>
+      <main>
+        <slot />
+      </main>
       <footer>
-        <div class="brand">Watch Stories</div>
-        <p>Every watch has a story. Let us help you find yours.</p>
-        <p style="margin-top: 1rem;">© 2026 Watch Stories. All rights reserved.</p>
+        <div class="container footer-inner">
+          <div>
+            <div class="brand">Watch Stories</div>
+            <p>Every watch has a story. Let us help you find yours.</p>
+          </div>
+          <p>&copy; 2026 Watch Stories. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   </body>

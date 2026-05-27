@@ -2,16 +2,63 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About" description="The story behind Watch Stories — why we believe every timepiece has a narrative worth sharing.">
-  <div class="hero">
-    <div class="subtitle">Our Story</div>
-    <h1>Why Watch Stories?</h1>
-    <p>A watch is never just a watch. It's the first gift you gave yourself. The heirloom your grandfather passed down. The marker of a milestone. We believe every watch has a story — and we're here to help you find yours.</p>
-  </div>
+<BaseLayout title="About" description="The story behind Watch Stories and why every timepiece has a narrative worth sharing.">
+  <section class="page-hero about-hero">
+    <div class="container">
+      <p class="eyebrow">Our story</p>
+      <h1>Why Watch Stories?</h1>
+      <p>
+        A watch is never just a watch. It can be the first gift you gave yourself,
+        the heirloom someone trusted you with, or the marker of a milestone.
+      </p>
+    </div>
+  </section>
 
-  <div style="max-width: 650px; margin: 0 auto; padding: var(--spacing-lg) 0; color: #555; line-height: 2;">
-    <p>Our curated collection brings together timepieces from the world's most respected brands — Seiko, Citizen, Casio, Orient, and more. Not because they're the most expensive, but because they have the most to say.</p>
-    <p style="margin-top: 1rem;">Whether you're a collector, a first-time buyer, or someone looking for a meaningful gift, we believe the right watch finds you.</p>
-    <p style="margin-top: 1rem; font-style: italic; color: var(--color-accent);">— The Watch Stories Team</p>
-  </div>
+  <section class="about-body">
+    <div class="container about-grid">
+      <div>
+        <p class="eyebrow">Our point of view</p>
+        <h2>The right watch should be easier to understand.</h2>
+      </div>
+      <div class="about-copy">
+        <p>
+          Our curated collection brings together timepieces from respected brands
+          such as Seiko, Citizen, Casio, Orient, and more. We focus on watches
+          that have something to say through design, function, or heritage.
+        </p>
+        <p>
+          Whether you are a collector, a first-time buyer, or someone looking for
+          a meaningful gift, Watch Stories is built to make discovery calmer,
+          clearer, and more personal.
+        </p>
+        <p class="signature">The Watch Stories Team</p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .about-hero { background: linear-gradient(180deg, var(--color-soft), var(--color-bg)); }
+  .about-body { padding: var(--spacing-xl) 0 var(--spacing-2xl); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-copy {
+    display: grid;
+    gap: 1.25rem;
+    color: var(--color-subtle);
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+  .signature {
+    color: var(--color-accent-dark);
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+  }
+  @media (max-width: 760px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>

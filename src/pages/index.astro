@@ -2,216 +2,282 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import products from '../data/products.json';
 
-const storyWatch = products.find(p => p.sku === 'SRE020J1') || products[0];
-const featured = products.slice(0, 6);
-const spotlight = products.slice(12, 15);
+const storyWatch = products.find((p) => p.sku === 'SRE020J1') || products[0];
+const featured = products.slice(0, 8);
+const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(0, 8);
 ---
 
-<BaseLayout title="Watch Stories" description="Every watch has a story. Discover timepieces that speak to you — curated stories of craftsmanship, heritage, and moments that matter.">
-  <!-- Hero -->
-  <section class="hero-full">
-    <div class="hero-content">
-      <div class="hero-kicker">— Welcome to Watch Stories —</div>
-      <h1>Every Watch<br>Has a Story</h1>
-      <p class="hero-text">A watch is more than an instrument. It's a companion through moments that matter — a silent witness to your story.</p>
-      <a href="/watches" class="btn-hero">Explore Stories</a>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-ornament"></div>
-    </div>
-  </section>
-
-  <!-- Philosophy -->
-  <section class="philosophy">
-    <div class="philosophy-inner">
-      <div class="philosophy-label">Our Belief</div>
-      <h2>Why Stories?</h2>
-      <div class="philosophy-grid">
-        <div class="belief-card">
-          <div class="belief-number">01</div>
-          <h3>Heritage</h3>
-          <p>Every watch carries the legacy of its makers — decades of craftsmanship, innovation, and passion distilled into a mechanical marvel on your wrist.</p>
-        </div>
-        <div class="belief-card">
-          <div class="belief-number">02</div>
-          <h3>Moments</h3>
-          <p>First promotion, a wedding day, a journey across continents. Watches mark the milestones of our lives, becoming tangible memories we carry with us.</p>
-        </div>
-        <div class="belief-card">
-          <div class="belief-number">03</div>
-          <h3>Connection</h3>
-          <p>A watch connects you to something bigger — the precision of a Swiss movement, the soul of a Japanese craft, the ruggedness of a tool built to last.</p>
+<BaseLayout title="Watch Stories" description="Curated timepieces with stories of craftsmanship, heritage, and personal milestones.">
+  <section class="home-hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Curated watch stories</p>
+        <h1>Find the watch that feels like part of your story.</h1>
+        <p>
+          Watch Stories brings together memorable timepieces, clear product context,
+          and the small details that make a watch worth wearing every day.
+        </p>
+        <div class="hero-actions">
+          <a href="/watches" class="btn btn-primary">Browse watches</a>
+          <a href="/stories/seiko-presage-cocktail.html" class="btn">Read a story</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Story Feature -->
-  {storyWatch && (
-  <section class="story-feature">
-    <div class="story-inner">
-      <div class="story-image">
-        <img src={storyWatch.image} alt={storyWatch.name} />
-      </div>
-      <div class="story-text">
-        <div class="story-kicker">Story of the Day</div>
-        <h2>{storyWatch.brand} — A Toast to Time</h2>
-        <p class="story-desc">The Seiko Presage Cocktail Time captures the golden hour on your wrist. Born from an unlikely collaboration between watchmakers and bartenders, this is a story of craftsmanship, celebration, and the shared moments that make time worth keeping.</p>
-        <div class="story-meta">
-          <span class="story-price">${storyWatch.price_usd?.toFixed(2)}</span>
-          <a href="/stories/seiko-presage-cocktail.html" class="btn-story">Read the Story →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  )}
-
-  <!-- Collection -->
-  <section class="collection">
-    <div class="collection-header">
-      <div class="section-label">Collection</div>
-      <h2>Curated Timepieces<br>With Stories to Tell</h2>
-    </div>
-    <div class="collection-grid">
-      {featured.map((product, i) => (
-        <a href={product.url || '#'} class="story-card" target="_blank" style={`--delay: ${i * 0.05}s`}>
-          <div class="story-card-image">
-            <img src={product.image} alt={product.name} loading="lazy" />
-            <div class="story-card-overlay"></div>
-          </div>
-          <div class="story-card-info">
-            <div class="story-card-brand">{product.brand}</div>
-            <h3>{(product.name || '').length > 45 ? (product.name || '').slice(0, 45) + '…' : (product.name || '')}</h3>
-            <div class="story-card-footer">
-              <span class="story-card-price">{product.price_usd > 0 ? `$${product.price_usd.toFixed(2)}` : ''}</span>
-              <span class="story-card-link">Discover →</span>
-            </div>
-          </div>
+      {storyWatch && (
+        <a href="/stories/seiko-presage-cocktail.html" class="hero-watch" aria-label="Read the Seiko Presage story">
+          <span class="hero-watch-label">Story spotlight</span>
+          <img src={storyWatch.image} alt={storyWatch.name} />
+          <span class="hero-watch-brand">{storyWatch.brand}</span>
+          <strong>{storyWatch.name}</strong>
+          <span class="hero-watch-price">${storyWatch.price_usd?.toFixed(2)}</span>
         </a>
-      ))}
-    </div>
-    <div class="collection-cta">
-      <a href="/watches" class="btn-outline">View All Watches — {products.length} Stories</a>
+      )}
     </div>
   </section>
 
-  <!-- Brand Stories -->
-  <section class="brands-section">
-    <div class="section-label">Brands</div>
-    <h2>Heritage Brands<br>Our Curated Selection</h2>
-    <div class="brands-showcase">
-      {['Seiko','Hamilton','Casio','Tissot','Orient','Citizen','Bulova','Longines'].filter(b => products.some(p => p.brand === b)).slice(0, 4).map(brand => {
-        const brandWatches = products.filter(p => p.brand === brand).slice(0, 3);
-        return (
-          <div class="brand-group">
-            <h3>{brand}</h3>
-            <div class="brand-mini-grid">
-              {brandWatches.map(w => (
-                <a href={w.url || '#'} class="brand-mini-card" target="_blank">
-                  <img src={w.image} alt={w.name} loading="lazy" />
-                  <span>{w.price_usd > 0 ? `$${w.price_usd.toFixed(0)}` : ''}</span>
-                </a>
-              ))}
+  <section class="beliefs">
+    <div class="container beliefs-grid">
+      <div>
+        <p class="eyebrow">Why stories</p>
+        <h2>A cleaner way to discover watches.</h2>
+      </div>
+      <div class="belief-list">
+        <article>
+          <span>01</span>
+          <h3>Heritage</h3>
+          <p>Understand the craft, movement, and design language behind each piece.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Purpose</h3>
+          <p>Compare watches by the moments they fit: work, travel, milestones, or daily wear.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Clarity</h3>
+          <p>Browse concise product cards that keep images, brand, price, and action visible.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Featured</p>
+          <h2>Selected watches</h2>
+        </div>
+        <a href="/watches" class="text-link">View all {products.length} watches</a>
+      </div>
+
+      <div class="product-grid">
+        {featured.map((product) => (
+          <a href={product.url || '/watches'} class="product-card" target="_blank" rel="noopener noreferrer">
+            <div class="product-image">
+              <img src={product.image} alt={product.name} loading="lazy" />
             </div>
-          </div>
-        );
-      })}
+            <div class="product-info">
+              <span>{product.brand}</span>
+              <h3>{product.name}</h3>
+              <strong>{product.price_usd > 0 ? `$${product.price_usd.toFixed(2)}` : 'View details'}</strong>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-final">
-    <div class="cta-inner">
-      <div class="cta-kicker">Find Yours</div>
-      <h2>Your Story Is Waiting</h2>
-      <p>Every timepiece has a story. The question is — which one will become yours?</p>
-      <a href="/watches" class="btn-hero">Browse the Collection</a>
+  <section class="brand-strip">
+    <div class="container">
+      <p class="eyebrow">Brands in the collection</p>
+      <div class="brand-list">
+        {brands.map((brand) => <span>{brand}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container final-cta-inner">
+      <p class="eyebrow">Find yours</p>
+      <h2>Your next watch should be easy to choose.</h2>
+      <p>Start with a curated collection, then follow the story that matches your wrist and your day.</p>
+      <a href="/watches" class="btn btn-primary">Explore the collection</a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  :global(:root) { --spacing-2xl: 10rem; }
-  .hero-full {
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 80vh; background: linear-gradient(135deg, #f0ece4, var(--color-bg));
+  .home-hero {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, var(--color-soft), var(--color-bg));
   }
-  .hero-content { padding: 8rem 3rem 4rem; max-width: 550px; justify-self: end; display: flex; flex-direction: column; justify-content: center; }
-  .hero-kicker { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--color-accent); text-transform: uppercase; margin-bottom: 1rem; font-weight: 500; }
-  .hero-content h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem; }
-  .hero-text { font-size: 1rem; color: var(--color-muted); line-height: 1.8; margin-bottom: 2.5rem; }
-  .btn-hero { display: inline-block; background: var(--color-text); color: white; padding: 0.9rem 2.5rem; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; transition: background 0.3s; align-self: flex-start; }
-  .btn-hero:hover { background: var(--color-accent); }
-  .hero-visual { display: flex; align-items: center; justify-content: center; }
-  .hero-ornament { width: 300px; height: 300px; border: 2px solid var(--color-accent); border-radius: 50%; opacity: 0.15; }
-  .philosophy { padding: var(--spacing-2xl) 2rem; background: white; }
-  .philosophy-inner { max-width: 1000px; margin: 0 auto; }
-  .philosophy-label { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--color-accent); text-transform: uppercase; font-weight: 500; margin-bottom: 0.5rem; }
-  .philosophy h2 { margin-bottom: var(--spacing-lg); }
-  .philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
-  .belief-card { }
-  .belief-number { font-family: var(--font-serif); font-size: 2.5rem; color: var(--color-accent); opacity: 0.2; margin-bottom: 0.5rem; }
-  .belief-card h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
-  .belief-card p { font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; }
-  .story-feature { background: var(--color-text); color: white; padding: 0; }
-  .story-inner { display: grid; grid-template-columns: 1fr 1fr; max-width: 1200px; margin: 0 auto; }
-  .story-image { display: flex; align-items: center; justify-content: center; background: #2a2a2a; padding: 4rem; }
-  .story-image img { max-width: 250px; height: auto; }
-  .story-text { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; }
-  .story-kicker { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--color-accent); text-transform: uppercase; font-weight: 500; margin-bottom: 1rem; }
-  .story-text h2 { font-family: var(--font-serif); font-size: 2rem; color: white; margin-bottom: 1.5rem; }
-  .story-desc { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.8; }
-  .story-meta { display: flex; align-items: center; gap: 2rem; margin-top: 2rem; }
-  .story-price { font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-accent); }
-  .btn-story { display: inline-block; color: white; text-decoration: none; font-size: 0.78rem; letter-spacing: 0.08em; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px; transition: border-color 0.3s; }
-  .btn-story:hover { border-color: var(--color-accent); }
-  .collection { padding: var(--spacing-2xl) 2rem; }
-  .collection-header { max-width: 1200px; margin: 0 auto var(--spacing-lg); }
-  .section-label { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--color-accent); text-transform: uppercase; font-weight: 500; margin-bottom: 0.5rem; }
-  .collection-header h2 { margin-bottom: 0; }
-  .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border); max-width: 1200px; margin: 0 auto; }
-  .story-card { position: relative; text-decoration: none; color: inherit; background: white; overflow: hidden; display: flex; flex-direction: column; animation: fadeIn 0.6s ease both; animation-delay: var(--delay, 0s); }
-  .story-card-image { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--color-border); }
-  .story-card-image img { width: 100%; height: 100%; object-fit: contain; padding: 1rem; transition: transform 0.6s; }
-  .story-card:hover .story-card-image img { transform: scale(1.08); }
-  .story-card-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.03)); opacity: 0; transition: opacity 0.4s; }
-  .story-card:hover .story-card-overlay { opacity: 1; }
-  .story-card-info { padding: 1rem 1.2rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
-  .story-card-brand { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--color-accent); text-transform: uppercase; font-weight: 600; margin-bottom: 0.3rem; }
-  .story-card-info h3 { font-size: 0.82rem; font-weight: 400; line-height: 1.5; margin-bottom: 0.5rem; flex: 1; }
-  .story-card-footer { display: flex; justify-content: space-between; align-items: center; }
-  .story-card-price { font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: var(--color-accent); }
-  .story-card-link { font-size: 0.7rem; color: var(--color-muted); transition: color 0.3s; }
-  .story-card:hover .story-card-link { color: var(--color-accent); }
-  .collection-cta { text-align: center; padding: var(--spacing-xl) 0 0; }
-  .btn-outline { display: inline-block; border: 1px solid var(--color-text); padding: 0.8rem 2.5rem; text-decoration: none; color: var(--color-text); font-size: 0.78rem; letter-spacing: 0.08em; transition: all 0.3s; }
-  .btn-outline:hover { background: var(--color-text); color: white; }
-  .brands-section { background: white; padding: var(--spacing-2xl) 2rem; }
-  .brands-section > .section-label, .brands-section > h2 { max-width: 1200px; margin-left: auto; margin-right: auto; }
-  .brands-showcase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .brand-group h3 { font-family: var(--font-serif); font-size: 0.9rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-border); color: var(--color-accent); }
-  .brand-mini-grid { display: flex; flex-direction: column; gap: 0.5rem; }
-  .brand-mini-card { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; padding: 0.4rem; transition: background 0.2s; border-radius: 4px; }
-  .brand-mini-card:hover { background: rgba(0,0,0,0.03); }
-  .brand-mini-card img { width: 50px; height: 50px; object-fit: contain; background: var(--color-border); border-radius: 4px; }
-  .brand-mini-card span { font-family: var(--font-serif); font-size: 0.78rem; color: var(--color-accent); }
-  .cta-final { background: linear-gradient(135deg, #1a1a1a, #2c2c2c); color: white; text-align: center; padding: var(--spacing-2xl) 2rem; }
-  .cta-inner { max-width: 600px; margin: 0 auto; }
-  .cta-kicker { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--color-accent); text-transform: uppercase; margin-bottom: 1rem; }
-  .cta-final h2 { color: white; margin-bottom: 1rem; }
-  .cta-final p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2.5rem; }
-  .cta-final .btn-hero { background: var(--color-accent); }
-  .cta-final .btn-hero:hover { background: #b89830; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  @media (max-width: 900px) {
-    .hero-full { grid-template-columns: 1fr; min-height: auto; }
-    .hero-content { padding: 6rem 2rem 3rem; max-width: 100%; }
-    .hero-visual { display: none; }
-    .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .story-inner { grid-template-columns: 1fr; }
-    .story-image { padding: 2rem; }
-    .story-text { padding: 2rem; }
-    .collection-grid { grid-template-columns: repeat(2, 1fr); }
-    .brands-showcase { grid-template-columns: repeat(2, 1fr); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.75fr);
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-copy p:not(.eyebrow) {
+    max-width: 620px;
+    margin-top: 1.25rem;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .hero-watch {
+    display: grid;
+    gap: 0.5rem;
+    min-height: 520px;
+    padding: 2rem;
+    color: inherit;
+    text-decoration: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  .hero-watch-label,
+  .hero-watch-brand {
+    color: var(--color-accent-dark);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .hero-watch img {
+    width: 100%;
+    height: 320px;
+    object-fit: contain;
+    align-self: center;
+  }
+  .hero-watch strong {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  .hero-watch-price {
+    color: var(--color-accent-dark);
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+  }
+  .beliefs { padding: var(--spacing-xl) 0; background: var(--color-surface); }
+  .beliefs-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .belief-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+  }
+  .belief-list article { min-height: 230px; padding: 1.5rem; background: var(--color-surface); }
+  .belief-list span {
+    display: block;
+    margin-bottom: 2.5rem;
+    color: var(--color-accent-dark);
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    opacity: 0.45;
+  }
+  .belief-list p { margin-top: 0.75rem; color: var(--color-muted); font-size: 0.9rem; }
+  .featured { padding: var(--spacing-xl) 0; }
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .text-link {
+    color: var(--color-accent-dark);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    background: var(--color-surface);
+  }
+  .product-image {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    padding: 1rem;
+    background: #f7f3ed;
+  }
+  .product-image img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.25s; }
+  .product-card:hover .product-image img { transform: scale(1.04); }
+  .product-info { display: grid; gap: 0.35rem; padding: 1rem; }
+  .product-info span {
+    color: var(--color-accent-dark);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .product-info h3 {
+    display: -webkit-box;
+    min-height: 3.2em;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .product-info strong {
+    color: var(--color-accent-dark);
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .brand-strip { padding: 4rem 0; background: var(--color-surface); border-block: 1px solid var(--color-border); }
+  .brand-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .brand-list span {
+    border: 1px solid var(--color-border);
+    padding: 0.55rem 0.85rem;
+    background: var(--color-bg);
+    color: var(--color-subtle);
+    font-size: 0.85rem;
+  }
+  .final-cta { padding: var(--spacing-xl) 0; text-align: center; }
+  .final-cta-inner { max-width: 720px; }
+  .final-cta p:not(.eyebrow) { margin: 1rem auto 2rem; color: var(--color-muted); max-width: 540px; }
+
+  @media (max-width: 980px) {
+    .hero-grid, .beliefs-grid { grid-template-columns: 1fr; }
+    .hero-watch { min-height: auto; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .belief-list { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .home-hero { padding: 4rem 0; }
+    .hero-grid { gap: 2rem; }
+    .hero-watch { padding: 1rem; }
+    .hero-watch img { height: 240px; }
+    .section-heading { align-items: start; flex-direction: column; }
+    .product-grid { grid-template-columns: 1fr; }
   }
 </style>
