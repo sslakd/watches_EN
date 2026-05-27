@@ -15,3 +15,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p style="color: var(--color-muted); font-style: italic;">More stories being added daily. Check back soon.</p>
   </div>
 </BaseLayout>
+
+<script>
+  (async () => {
+    try {
+      const res = await fetch('/data/products.json');
+      const products = await res.json();
+      const grid = document.getElementById('watches-grid');
+      if (!grid || !products.length) return;
+
+      grid.innerHTML = products.map(p => {
+        const img = p.image
+          ? `<img src="${p.image}" alt="${p.name}" loading="lazy" />`
+          : `<div style="background:#e8e3dd;width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#888;font-size:0.85rem;">No Image</div>`;
+        const price = p.price_usd > 0 ? `$${p.price_usd.toFixed(2)}` : '';
+        return `<a href="${p.url}" class="card" target="_blank" rel="noopener">
+          ${img}
+          <div class="brand">${p.brand || ''}</div>
+          <h3>${p.name}</h3>
+          <div class="price">${price}</div>
+        </a>`;
+      }).join('');
+    } catch(e) {
+      console.warn('Failed to load products:', e);
+    }
+  })();
+</script>
