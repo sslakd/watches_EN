@@ -7,18 +7,19 @@ const featured = products.slice(0, 8);
 const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(0, 8);
 ---
 
-<BaseLayout title="Watch Stories" description="Curated timepieces with stories of craftsmanship, heritage, and personal milestones.">
+<BaseLayout title="Watch Stories" description="Editorial watch stories, buying guides, and CreationWatches price links for collectors and first-time buyers.">
   <section class="home-hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Curated watch stories</p>
-        <h1>Find the watch that feels like part of your story.</h1>
+        <p class="eyebrow">Editorial watch guides</p>
+        <h1>Stories that help readers choose their next watch.</h1>
         <p>
-          Watch Stories brings together memorable timepieces, clear product context,
-          and the small details that make a watch worth wearing every day.
+          Watch Stories is built as a quiet buying companion: we explain the
+          heritage, use case, and appeal of each watch, then send ready buyers
+          to CreationWatches to check current pricing.
         </p>
         <div class="hero-actions">
-          <a href="/watches" class="btn btn-primary">Browse watches</a>
+          <a href="/watches" class="btn btn-primary">Read buying guides</a>
           <a href="/stories/seiko-presage-cocktail.html" class="btn">Read a story</a>
         </div>
       </div>
@@ -39,23 +40,23 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     <div class="container beliefs-grid">
       <div>
         <p class="eyebrow">Why stories</p>
-        <h2>A cleaner way to discover watches.</h2>
+        <h2>An editorial funnel, not a storefront.</h2>
       </div>
       <div class="belief-list">
         <article>
           <span>01</span>
           <h3>Heritage</h3>
-          <p>Understand the craft, movement, and design language behind each piece.</p>
+          <p>Give search traffic a reason to stay with stories, context, and brand background.</p>
         </article>
         <article>
           <span>02</span>
           <h3>Purpose</h3>
-          <p>Compare watches by the moments they fit: work, travel, milestones, or daily wear.</p>
+          <p>Frame each watch by use case: work, travel, milestone gifts, daily wear, or collecting.</p>
         </article>
         <article>
           <span>03</span>
           <h3>Clarity</h3>
-          <p>Browse concise product cards that keep images, brand, price, and action visible.</p>
+          <p>Move interested readers toward a single action: check the current price at CreationWatches.</p>
         </article>
       </div>
     </div>
@@ -65,8 +66,8 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Featured</p>
-          <h2>Selected watches</h2>
+          <p class="eyebrow">Affiliate guides</p>
+          <h2>Watches worth reading about</h2>
         </div>
         <a href="/watches" class="text-link">View all {products.length} watches</a>
       </div>
@@ -81,6 +82,7 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
               <span>{product.brand}</span>
               <h3>{product.name}</h3>
               <strong>{product.price_usd > 0 ? `$${product.price_usd.toFixed(2)}` : 'View details'}</strong>
+              <small>Check price at CreationWatches</small>
             </div>
           </a>
         ))}
@@ -100,9 +102,9 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
   <section class="final-cta">
     <div class="container final-cta-inner">
       <p class="eyebrow">Find yours</p>
-      <h2>Your next watch should be easy to choose.</h2>
-      <p>Start with a curated collection, then follow the story that matches your wrist and your day.</p>
-      <a href="/watches" class="btn btn-primary">Explore the collection</a>
+      <h2>Turn watch research into affiliate clicks.</h2>
+      <p>Start with the story, answer the buying questions, then send readers to CreationWatches when intent is highest.</p>
+      <a href="/watches" class="btn btn-primary">Browse the guides</a>
     </div>
   </section>
 </BaseLayout>
@@ -247,6 +249,13 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     font-family: var(--font-serif);
     font-size: 1rem;
     font-weight: 600;
+  }
+  .product-info small {
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
   .brand-strip { padding: 4rem 0; background: var(--color-surface); border-block: 1px solid var(--color-border); }
   .brand-list {

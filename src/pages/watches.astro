@@ -10,14 +10,14 @@ const priceGroups = [
 ].filter((group) => group.watches.length > 0);
 ---
 
-<BaseLayout title="All Watches" description="Browse the Watch Stories collection by price, brand, and product story.">
+<BaseLayout title="Watch Buying Guides" description="Editorial watch guides with story-led context and CreationWatches price links.">
   <section class="page-hero collection-hero">
     <div class="container">
-      <p class="eyebrow">The collection</p>
-      <h1>{products.length} watches, clearly organized.</h1>
+      <p class="eyebrow">Buying guide hub</p>
+      <h1>{products.length} watches organized for affiliate discovery.</h1>
       <p>
-        Browse practical daily watches, value-focused automatics, and collector pieces
-        from the same simple product view.
+        Use the stories and price bands to understand what each watch is for,
+        then check the live CreationWatches listing when a piece fits your search.
       </p>
     </div>
   </section>
@@ -26,8 +26,8 @@ const priceGroups = [
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Start by budget</p>
-          <h2>Price ranges</h2>
+          <p class="eyebrow">Reader intent</p>
+          <h2>Start by budget</h2>
         </div>
       </div>
 
@@ -46,6 +46,7 @@ const priceGroups = [
                     <span>{watch.brand}</span>
                     <strong>{watch.name}</strong>
                     <em>{watch.price_usd > 0 ? `$${watch.price_usd.toFixed(2)}` : 'View details'}</em>
+                    <small>CreationWatches price link</small>
                   </div>
                 </a>
               ))}
@@ -60,8 +61,8 @@ const priceGroups = [
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Curated feed</p>
-          <h2>All watches</h2>
+          <p class="eyebrow">Affiliate feed</p>
+          <h2>All watch guides</h2>
         </div>
         <span class="count">{visibleProducts.length} shown</span>
       </div>
@@ -77,6 +78,7 @@ const priceGroups = [
               <span>{watch.brand}</span>
               <h3>{watch.name}</h3>
               <strong>{watch.price_usd > 0 ? `$${watch.price_usd.toFixed(2)}` : 'View details'}</strong>
+              <small>Check price at CreationWatches</small>
             </div>
           </a>
         ))}
@@ -161,6 +163,14 @@ const priceGroups = [
     font-family: var(--font-serif);
     font-size: 0.96rem;
     font-style: normal;
+  }
+  .mini-card small,
+  .watch-info small {
+    color: var(--color-muted);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
   .all-watches { padding: var(--spacing-xl) 0 var(--spacing-2xl); }
   .watch-grid {
