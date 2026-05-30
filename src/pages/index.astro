@@ -3,8 +3,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import products from '../data/products.json';
 
 const storyWatch = products.find((p) => p.sku === 'SRE020J1') || products[0];
-const featured = products.slice(0, 8);
 const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(0, 8);
+const storyCards = [
+  {
+    label: 'Evening watch',
+    brand: 'Seiko',
+    title: 'The Seiko Cocktail',
+    href: '/stories/seiko-presage-cocktail.html',
+    image: 'https://cdnstatic.creationwatches.com/products/product-images/l/SRE020J1_LRG.webp',
+    note: 'A champagne dial, cocktail-hour light, and the quiet romance of Presage.',
+  },
+  {
+    label: 'Field legend',
+    brand: 'Hamilton',
+    title: 'Khaki Field Titanium',
+    href: '/stories/khaki-field-titanium.html',
+    image: 'https://cdnstatic.creationwatches.com/products/product-images/l/H70205830_LRG.webp',
+    note: 'A lightweight field watch built around utility, endurance, and restraint.',
+  },
+  {
+    label: 'Dive story',
+    brand: 'Hamilton',
+    title: 'Khaki Navy Scuba',
+    href: '/stories/khaki-navy-scuba.html',
+    image: 'https://cdnstatic.creationwatches.com/products/product-images/l/H82365141_LRG.webp',
+    note: 'A clean everyday diver with enough character to carry a weekend.',
+  },
+  {
+    label: 'Racing time',
+    brand: 'Tissot',
+    title: 'T-Race Chronograph',
+    href: '/stories/t-race-chronograph-t048.html',
+    image: 'https://cdnstatic.creationwatches.com/products/product-images/l/T048.427.27.057.00_LRG.webp',
+    note: 'Motorsport energy, mechanical timing, and a wrist presence that moves.',
+  },
+];
 ---
 
 <BaseLayout title="Watch Stories" description="Editorial watch stories, buying guides, and CreationWatches price links for collectors and first-time buyers.">
@@ -12,15 +45,15 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Editorial watch guides</p>
-        <h1>Stories that help readers choose their next watch.</h1>
+        <h1>See the watch. Read its story. Then decide.</h1>
         <p>
-          Watch Stories is built as a quiet buying companion: we explain the
-          heritage, use case, and appeal of each watch, then send ready buyers
-          to CreationWatches to check current pricing.
+          Watch Stories is a global editorial path, not a storefront. Readers
+          first meet a watch visually, then learn the heritage, use case, and
+          feeling behind it before any buying link appears.
         </p>
         <div class="hero-actions">
-          <a href="/watches" class="btn btn-primary">Read buying guides</a>
-          <a href="/stories/seiko-presage-cocktail.html" class="btn">Read a story</a>
+          <a href="/stories/seiko-presage-cocktail.html" class="btn btn-primary">Read the spotlight story</a>
+          <a href="#stories" class="btn">Browse story picks</a>
         </div>
       </div>
 
@@ -29,8 +62,8 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
           <span class="hero-watch-label">Story spotlight</span>
           <img src={storyWatch.image} alt={storyWatch.name} />
           <span class="hero-watch-brand">{storyWatch.brand}</span>
-          <strong>{storyWatch.name}</strong>
-          <span class="hero-watch-price">${storyWatch.price_usd?.toFixed(2)}</span>
+          <strong>The Seiko Cocktail: a toast to time</strong>
+          <span class="hero-watch-price">Read the story</span>
         </a>
       )}
     </div>
@@ -45,44 +78,45 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
       <div class="belief-list">
         <article>
           <span>01</span>
-          <h3>Heritage</h3>
-          <p>Give search traffic a reason to stay with stories, context, and brand background.</p>
+          <h3>See</h3>
+          <p>A strong watch image creates the first moment of curiosity.</p>
         </article>
         <article>
           <span>02</span>
-          <h3>Purpose</h3>
-          <p>Frame each watch by use case: work, travel, milestone gifts, daily wear, or collecting.</p>
+          <h3>Read</h3>
+          <p>The story explains heritage, use case, mood, and why the watch matters.</p>
         </article>
         <article>
           <span>03</span>
-          <h3>Clarity</h3>
-          <p>Move interested readers toward a single action: check the current price at CreationWatches.</p>
+          <h3>Buy</h3>
+          <p>The CreationWatches CTA appears after the reader has context and intent.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="featured">
+  <section class="featured" id="stories">
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Affiliate guides</p>
-          <h2>Watches worth reading about</h2>
+          <p class="eyebrow">Story picks</p>
+          <h2>Watches worth a closer look</h2>
         </div>
         <a href="/watches" class="text-link">View all {products.length} watches</a>
       </div>
 
-      <div class="product-grid">
-        {featured.map((product) => (
-          <a href={product.url || '/watches'} class="product-card" target="_blank" rel="noopener noreferrer">
-            <div class="product-image">
-              <img src={product.image} alt={product.name} loading="lazy" />
+      <div class="story-grid">
+        {storyCards.map((story) => (
+          <a href={story.href} class="story-card">
+            <div class="story-image">
+              <span>{story.label}</span>
+              <img src={story.image} alt={`${story.brand} ${story.title}`} loading="lazy" />
             </div>
-            <div class="product-info">
-              <span>{product.brand}</span>
-              <h3>{product.name}</h3>
-              <strong>{product.price_usd > 0 ? `$${product.price_usd.toFixed(2)}` : 'View details'}</strong>
-              <small>Check price at CreationWatches</small>
+            <div class="story-info">
+              <span>{story.brand}</span>
+              <h3>{story.title}</h3>
+              <p>{story.note}</p>
+              <strong>Read story</strong>
             </div>
           </a>
         ))}
@@ -102,9 +136,9 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
   <section class="final-cta">
     <div class="container final-cta-inner">
       <p class="eyebrow">Find yours</p>
-      <h2>Turn watch research into affiliate clicks.</h2>
-      <p>Start with the story, answer the buying questions, then send readers to CreationWatches when intent is highest.</p>
-      <a href="/watches" class="btn btn-primary">Browse the guides</a>
+      <h2>Start with a story, not a checkout.</h2>
+      <p>The site earns trust by letting each watch explain itself before the reader reaches a buying decision.</p>
+      <a href="#stories" class="btn btn-primary">Read story picks</a>
     </div>
   </section>
 </BaseLayout>
@@ -201,14 +235,14 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     text-decoration: none;
     text-transform: uppercase;
   }
-  .product-grid {
+  .story-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     background: var(--color-border);
     border: 1px solid var(--color-border);
   }
-  .product-card {
+  .story-card {
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -216,46 +250,53 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     text-decoration: none;
     background: var(--color-surface);
   }
-  .product-image {
+  .story-image {
+    position: relative;
     display: grid;
     place-items: center;
     aspect-ratio: 1;
     padding: 1rem;
     background: #f7f3ed;
   }
-  .product-image img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.25s; }
-  .product-card:hover .product-image img { transform: scale(1.04); }
-  .product-info { display: grid; gap: 0.35rem; padding: 1rem; }
-  .product-info span {
+  .story-image > span {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: 0.3rem 0.5rem;
+    color: var(--color-accent-dark);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .story-image img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.25s; }
+  .story-card:hover .story-image img { transform: scale(1.04); }
+  .story-info { display: grid; gap: 0.5rem; padding: 1rem; }
+  .story-info span {
     color: var(--color-accent-dark);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
-  .product-info h3 {
-    display: -webkit-box;
-    min-height: 3.2em;
-    overflow: hidden;
+  .story-info h3 {
     font-family: var(--font-sans);
-    font-size: 0.88rem;
-    font-weight: 400;
-    line-height: 1.6;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
   }
-  .product-info strong {
+  .story-info p {
+    color: var(--color-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .story-info strong {
     color: var(--color-accent-dark);
     font-family: var(--font-serif);
     font-size: 1rem;
     font-weight: 600;
-  }
-  .product-info small {
-    color: var(--color-muted);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
   .brand-strip { padding: 4rem 0; background: var(--color-surface); border-block: 1px solid var(--color-border); }
   .brand-list {
@@ -278,7 +319,7 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
   @media (max-width: 980px) {
     .hero-grid, .beliefs-grid { grid-template-columns: 1fr; }
     .hero-watch { min-height: auto; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .story-grid { grid-template-columns: repeat(2, 1fr); }
     .belief-list { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
@@ -287,6 +328,6 @@ const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))].slice(
     .hero-watch { padding: 1rem; }
     .hero-watch img { height: 240px; }
     .section-heading { align-items: start; flex-direction: column; }
-    .product-grid { grid-template-columns: 1fr; }
+    .story-grid { grid-template-columns: 1fr; }
   }
 </style>
