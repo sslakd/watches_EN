@@ -15,7 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </header>
 
     <div class="story-hero-img">
-      <img src="https://cdnstatic.creationwatches.com/products/product-images/l/SRE020J1_LRG.webp" alt="Seiko Presage Cocktail Diamond Accents SRE020J1" />
+      <img src="/images/watches/SRE020J1-transparent.webp" alt="Seiko Presage Cocktail Diamond Accents SRE020J1" />
     </div>
 
     <div class="story-body">
@@ -66,7 +66,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       <div class="story-cta">
         <p>If this Cocktail Time belongs in your next chapter, check the current price and availability at CreationWatches.</p>
-        <a href="https://www.creationwatches.com/products/seiko-womens-watches-215/seiko-presage-cocktail-diamond-accents-leather-strap-automatic-sre020j1-womens-watch-31366.html" class="btn btn-primary" target="_blank" rel="nofollow noopener noreferrer">Buy at CreationWatches</a>
+        <a href="https://www.creationwatches.com/products/seiko-womens-watches-215/seiko-presage-cocktail-diamond-accents-leather-strap-automatic-sre020j1-womens-watch-31366.html" class="purchase-link" target="_blank" rel="sponsored nofollow noopener noreferrer">View price at CreationWatches <span>→</span></a>
       </div>
     </div>
   </article>
@@ -78,8 +78,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .story-category { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1rem; font-weight: 500; }
   .story-header h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; }
   .story-meta-line { font-size: 0.8rem; color: var(--color-muted); display: flex; justify-content: center; gap: 0.5rem; }
-  .story-hero-img { margin: 0 -1.5rem 3rem; text-align: center; background: var(--color-border); padding: 2rem; }
-  .story-hero-img img { max-width: 300px; height: auto; }
+  .story-hero-img { display: grid; place-items: center; min-height: 520px; margin: 0 -1.5rem 3rem; background: #e8ede9; padding: 3rem; overflow: hidden; }
+  .story-hero-img img { width: auto; max-width: 100%; height: 440px; object-fit: contain; }
   .story-body { font-size: 1rem; line-height: 1.9; color: var(--color-text); }
   .story-lede { font-size: 1.15rem; line-height: 1.8; color: var(--color-muted); font-style: italic; margin-bottom: 2rem; padding-left: 1rem; border-left: 3px solid var(--color-accent); }
   .story-body h2 { font-family: var(--font-serif); font-size: 1.5rem; margin-top: 3rem; margin-bottom: 1rem; }
@@ -92,6 +92,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .story-specs li:last-child { border-bottom: none; }
   .story-cta { text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(to bottom, transparent, var(--color-border)); border-radius: 8px; }
   .story-cta p { font-size: 0.9rem; color: var(--color-muted); margin-bottom: 1.5rem; }
+  .purchase-link { display: inline-flex; align-items: center; gap: 1rem; padding: .85rem 1.25rem; color: #fff; background: #263a38; border: 1px solid #263a38; text-decoration: none; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
   @media (max-width: 600px) {
     .story-article { padding: 2rem 1rem; }
     .story-header h1 { font-size: 1.8rem; }
