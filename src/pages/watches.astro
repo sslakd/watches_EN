@@ -3,247 +3,106 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import products from '../data/products.json';
 
 const visibleProducts = products.slice(0, 48);
-const priceGroups = [
-  { label: 'Under $100', range: 'Everyday picks', watches: products.filter((p) => p.price_usd > 0 && p.price_usd < 100).slice(0, 4) },
-  { label: '$100 to $300', range: 'Strong value', watches: products.filter((p) => p.price_usd >= 100 && p.price_usd < 300).slice(0, 4) },
-  { label: '$300+', range: 'Collector focus', watches: products.filter((p) => p.price_usd >= 300).slice(0, 4) },
-].filter((group) => group.watches.length > 0);
+const chapters = [
+  { label: 'Everyday discoveries', title: 'Under $100', copy: 'Straightforward, characterful watches for daily life.', watches: products.filter((p) => p.price_usd > 0 && p.price_usd < 100).slice(0, 4) },
+  { label: 'Considered value', title: '$100 to $300', copy: 'A richer balance of design, heritage, and capability.', watches: products.filter((p) => p.price_usd >= 100 && p.price_usd < 300).slice(0, 4) },
+  { label: 'Collector territory', title: '$300 and beyond', copy: 'Mechanical depth and watches made to mark an occasion.', watches: products.filter((p) => p.price_usd >= 300).slice(0, 4) },
+].filter((chapter) => chapter.watches.length);
 ---
 
-<BaseLayout title="Watch Buying Guides" description="Editorial watch guides with story-led context and CreationWatches price links.">
-  <section class="page-hero collection-hero">
+<BaseLayout title="Watch Collection" description="Explore watches by story, character, and price before checking CreationWatches availability.">
+  <section class="collection-hero">
     <div class="container">
-      <p class="eyebrow">Buying guide hub</p>
-      <h1>{products.length} watches organized for affiliate discovery.</h1>
-      <p>
-        Use the stories and price bands to understand what each watch is for,
-        then check the live CreationWatches listing when a piece fits your search.
-      </p>
+      <p class="kicker">The watch collection</p>
+      <h1>A world of watches, arranged for discovery.</h1>
+      <p>Move through price, character, and purpose. When a watch feels right, continue to its current CreationWatches listing.</p>
     </div>
   </section>
 
-  <section class="price-groups">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Reader intent</p>
-          <h2>Start by budget</h2>
+  <section class="chapters">
+    {chapters.map((chapter, index) => (
+      <article class:list={['chapter', { reverse: index % 2 === 1 }]}>
+        <div class="chapter-copy">
+          <p class="kicker">{chapter.label}</p>
+          <h2>{chapter.title}</h2>
+          <p>{chapter.copy}</p>
         </div>
-      </div>
-
-      <div class="group-grid">
-        {priceGroups.map((group) => (
-          <section class="group-panel">
-            <div class="group-header">
-              <span>{group.range}</span>
-              <h3>{group.label}</h3>
-            </div>
-            <div class="mini-list">
-              {group.watches.map((watch) => (
-                <a href={watch.url || '#'} class="mini-card" target="_blank" rel="noopener noreferrer">
-                  <img src={watch.image} alt={watch.name} loading="lazy" />
-                  <div>
-                    <span>{watch.brand}</span>
-                    <strong>{watch.name}</strong>
-                    <em>{watch.price_usd > 0 ? `$${watch.price_usd.toFixed(2)}` : 'View details'}</em>
-                    <small>CreationWatches price link</small>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="all-watches">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Affiliate feed</p>
-          <h2>All watch guides</h2>
-        </div>
-        <span class="count">{visibleProducts.length} shown</span>
-      </div>
-
-      <div class="watch-grid">
-        {visibleProducts.map((watch) => (
-          <a href={watch.url || '#'} class="watch-card" target="_blank" rel="noopener noreferrer">
-            <div class="watch-image">
-              {watch.price_usd > 0 && watch.price_usd < 100 && <span class="badge">Value</span>}
+        <div class="chapter-watches">
+          {chapter.watches.map((watch) => (
+            <a href={watch.url || '#'} target="_blank" rel="sponsored nofollow noopener noreferrer">
               <img src={watch.image} alt={watch.name} loading="lazy" />
-            </div>
-            <div class="watch-info">
               <span>{watch.brand}</span>
-              <h3>{watch.name}</h3>
-              <strong>{watch.price_usd > 0 ? `$${watch.price_usd.toFixed(2)}` : 'View details'}</strong>
-              <small>Check price at CreationWatches</small>
-            </div>
-          </a>
-        ))}
-      </div>
+              <strong>{watch.name}</strong>
+              <em>${watch.price_usd.toFixed(2)}</em>
+            </a>
+          ))}
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="catalogue">
+    <header class="container catalogue-heading">
+      <div><p class="kicker">All watches</p><h2>Continue exploring.</h2></div>
+      <span>{visibleProducts.length} selected</span>
+    </header>
+    <div class="watch-grid">
+      {visibleProducts.map((watch) => (
+        <a href={watch.url || '#'} class="watch-card" target="_blank" rel="sponsored nofollow noopener noreferrer">
+          <div class="watch-image"><img src={watch.image} alt={watch.name} loading="lazy" /></div>
+          <div class="watch-info">
+            <span>{watch.brand}</span>
+            <h3>{watch.name}</h3>
+            <div><strong>{watch.price_usd > 0 ? `$${watch.price_usd.toFixed(2)}` : 'View details'}</strong><small>View price →</small></div>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .collection-hero {
-    background: linear-gradient(180deg, var(--color-soft), var(--color-bg));
-  }
-  .price-groups { padding: var(--spacing-xl) 0; background: var(--color-surface); }
-  .section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .count {
-    color: var(--color-muted);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .group-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--color-border);
-    border: 1px solid var(--color-border);
-  }
-  .group-panel { background: var(--color-surface); }
-  .group-header { padding: 1.25rem; border-bottom: 1px solid var(--color-border); }
-  .group-header span {
-    color: var(--color-accent-dark);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-  .group-header h3 { margin-top: 0.35rem; }
-  .mini-list { display: grid; }
-  .mini-card {
-    display: grid;
-    grid-template-columns: 74px 1fr;
-    gap: 0.9rem;
-    min-width: 0;
-    padding: 1rem 1.25rem;
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .mini-card:last-child { border-bottom: 0; }
-  .mini-card:hover { background: var(--color-bg); }
-  .mini-card img {
-    width: 74px;
-    height: 74px;
-    object-fit: contain;
-    background: var(--color-soft);
-  }
-  .mini-card div { min-width: 0; display: grid; gap: 0.2rem; align-content: center; }
-  .mini-card span,
-  .watch-info span {
-    color: var(--color-accent-dark);
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .mini-card strong {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 0.86rem;
-    font-weight: 400;
-  }
-  .mini-card em {
-    color: var(--color-accent-dark);
-    font-family: var(--font-serif);
-    font-size: 0.96rem;
-    font-style: normal;
-  }
-  .mini-card small,
-  .watch-info small {
-    color: var(--color-muted);
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .all-watches { padding: var(--spacing-xl) 0 var(--spacing-2xl); }
-  .watch-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--color-border);
-    border: 1px solid var(--color-border);
-  }
-  .watch-card {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    color: inherit;
-    text-decoration: none;
-    background: var(--color-surface);
-  }
-  .watch-image {
-    position: relative;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 1;
-    padding: 1rem;
-    background: #f7f3ed;
-  }
-  .watch-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.25s;
-  }
-  .watch-card:hover .watch-image img { transform: scale(1.04); }
-  .badge {
-    position: absolute;
-    top: 0.7rem;
-    left: 0.7rem;
-    z-index: 1;
-    background: var(--color-text);
-    color: white;
-    padding: 0.25rem 0.45rem;
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .watch-info { display: grid; gap: 0.35rem; padding: 1rem; }
-  .watch-info h3 {
-    display: -webkit-box;
-    min-height: 3.2em;
-    overflow: hidden;
-    font-family: var(--font-sans);
-    font-size: 0.88rem;
-    font-weight: 400;
-    line-height: 1.6;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .watch-info strong {
-    color: var(--color-accent-dark);
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  @media (max-width: 1040px) {
-    .group-grid { grid-template-columns: 1fr; }
-    .watch-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 720px) {
-    .section-heading { align-items: start; flex-direction: column; }
+  .container { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+  .kicker { margin-bottom: 1.3rem; font-size: .68rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+  .collection-hero { min-height: 650px; display: grid; align-items: end; padding-bottom: 7rem; color: #fff; background: #263a38; }
+  .collection-hero h1 { max-width: 900px; font-size: 5.2rem; line-height: 1; }
+  .collection-hero .container > p:last-child { max-width: 620px; margin-top: 2rem; font-size: 1.05rem; }
+  .chapter { display: grid; grid-template-columns: 38% 62%; min-height: 680px; }
+  .chapter.reverse { grid-template-columns: 62% 38%; }
+  .chapter.reverse .chapter-copy { order: 2; color: #fff; background: #263a38; }
+  .chapter-copy { display: flex; flex-direction: column; justify-content: center; padding: 5rem; background: #e7e1d7; }
+  .chapter-copy h2 { font-size: 3.8rem; }
+  .chapter-copy > p:last-child { max-width: 360px; margin-top: 1.5rem; line-height: 1.8; }
+  .chapter-watches { display: grid; grid-template-columns: repeat(2, 1fr); background: #e8ede9; }
+  .chapter-watches a { min-width: 0; display: grid; grid-template-rows: 1fr auto auto auto; padding: 2rem; color: inherit; text-decoration: none; border: 1px solid rgba(38,58,56,.12); }
+  .chapter-watches img { width: 100%; height: 390px; object-fit: contain; mix-blend-mode: multiply; transition: transform .4s; }
+  .chapter-watches a:hover img { transform: scale(1.04); }
+  .chapter-watches span, .watch-info > span { font-size: .62rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .chapter-watches strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .85rem; font-weight: 400; }
+  .chapter-watches em { color: #52665f; font-family: var(--font-serif); font-style: normal; }
+  .catalogue { padding: 9rem 0; background: #fff; }
+  .catalogue-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 4rem; }
+  .catalogue-heading h2 { font-size: 4rem; }
+  .catalogue-heading > span { color: var(--color-muted); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+  .watch-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--color-border); border-left: 1px solid var(--color-border); }
+  .watch-card { min-width: 0; color: inherit; text-decoration: none; border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .watch-image { aspect-ratio: 1; display: grid; place-items: center; padding: 1.5rem; background: #f5f6f3; }
+  .watch-image img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .watch-info { padding: 1.25rem; }
+  .watch-info h3 { min-height: 3.4em; margin: .5rem 0 1rem; overflow: hidden; font-family: var(--font-sans); font-size: .85rem; font-weight: 400; line-height: 1.7; }
+  .watch-info div { display: flex; justify-content: space-between; gap: 1rem; }
+  .watch-info strong { font-family: var(--font-serif); }
+  .watch-info small { color: var(--color-muted); }
+  @media (max-width: 900px) {
+    .collection-hero h1 { font-size: 3.5rem; }
+    .chapter, .chapter.reverse { grid-template-columns: 1fr; }
+    .chapter.reverse .chapter-copy { order: 0; }
+    .chapter-copy { padding: 4rem 2rem; }
     .watch-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 480px) {
-    .watch-grid { grid-template-columns: 1fr; }
+  @media (max-width: 560px) {
+    .chapter-watches, .watch-grid { grid-template-columns: 1fr; }
+    .catalogue-heading { align-items: start; flex-direction: column; gap: 1rem; }
+    .catalogue-heading h2, .chapter-copy h2 { font-size: 2.7rem; }
   }
 </style>

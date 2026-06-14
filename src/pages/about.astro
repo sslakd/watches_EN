@@ -2,63 +2,74 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About" description="Watch Stories is an editorial affiliate site that turns watch research into CreationWatches traffic.">
-  <section class="page-hero about-hero">
-    <div class="container">
-      <p class="eyebrow">Our story</p>
-      <h1>Why Watch Stories?</h1>
-      <p>
-        Watch Stories is an editorial affiliate site. We use stories, buying context,
-        and brand heritage to help readers decide which watch is worth opening at
-        CreationWatches.
-      </p>
+<BaseLayout title="About" description="Why Watch Stories puts editorial context before the buying link.">
+  <section class="about-hero">
+    <div class="container hero-inner">
+      <p class="kicker">Our point of view</p>
+      <h1>A watch becomes meaningful before it becomes yours.</h1>
+      <p class="intro">We tell the stories behind timepieces so choosing one feels considered, personal, and worth remembering.</p>
     </div>
   </section>
 
-  <section class="about-body">
-    <div class="container about-grid">
+  <section class="manifesto">
+    <div class="container manifesto-grid">
       <div>
-        <p class="eyebrow">Our point of view</p>
-        <h2>We write for readers before they click the affiliate link.</h2>
+        <p class="kicker">Why we exist</p>
+        <h2>Less catalogue.<br />More connection.</h2>
       </div>
-      <div class="about-copy">
-        <p>
-          Our job is not to look like another store. It is to earn search traffic
-          with useful watch stories, explain why a model matters, and give readers
-          a clear next step when they are ready to compare the current price.
-        </p>
-        <p>
-          Product links may point to CreationWatches. When readers buy through
-          those links, we may earn an affiliate commission at no extra cost to them.
-        </p>
-        <p class="signature">The Watch Stories Team</p>
+      <div class="copy">
+        <p>A specification can describe a watch, but it cannot explain why it stays in your mind. We look at craft, place, design, heritage, and the life a watch was made to accompany.</p>
+        <p>Only after that story do we offer a path to CreationWatches, where readers can check current price and availability.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="principles">
+    <div class="principle dark"><span>01</span><h3>See the watch</h3><p>Every journey begins with form, proportion, material, and a first impression.</p></div>
+    <div class="principle light"><span>02</span><h3>Understand its world</h3><p>History and context turn a product into an object with character.</p></div>
+    <div class="principle green"><span>03</span><h3>Choose with clarity</h3><p>The buying link appears when the story has done its work.</p></div>
+  </section>
+
+  <section class="disclosure">
+    <div class="container">
+      <p class="kicker">Transparency</p>
+      <h2>Independent stories, clearly disclosed links.</h2>
+      <p>Some links point to CreationWatches. We may earn a commission when a reader purchases through them, at no extra cost to the reader.</p>
+      <a href="/watches">Explore the watch collection <span>→</span></a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .about-hero { background: linear-gradient(180deg, var(--color-soft), var(--color-bg)); }
-  .about-body { padding: var(--spacing-xl) 0 var(--spacing-2xl); }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .about-copy {
-    display: grid;
-    gap: 1.25rem;
-    color: var(--color-subtle);
-    font-size: 1rem;
-    line-height: 1.9;
-  }
-  .signature {
-    color: var(--color-accent-dark);
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-  }
-  @media (max-width: 760px) {
-    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .container { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+  .kicker { margin-bottom: 1.5rem; font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+  .about-hero { min-height: 720px; display: grid; align-items: end; color: #fff; background: #263a38; }
+  .hero-inner { padding-bottom: 7rem; }
+  .about-hero h1 { max-width: 900px; font-size: 5.2rem; line-height: 1; }
+  .intro { max-width: 620px; margin-top: 2rem; font-size: 1.1rem; line-height: 1.8; }
+  .manifesto { padding: 10rem 0; background: #f6f3ed; }
+  .manifesto-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 8rem; }
+  .manifesto h2, .disclosure h2 { font-size: 4rem; line-height: 1.08; }
+  .copy { display: grid; gap: 2rem; color: var(--color-subtle); font-size: 1.08rem; line-height: 1.9; }
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .principle { min-height: 520px; display: flex; flex-direction: column; justify-content: end; padding: 4rem; }
+  .principle span { margin-bottom: auto; font-size: .72rem; letter-spacing: .18em; }
+  .principle h3 { font-size: 2.2rem; }
+  .principle p { margin-top: 1.25rem; line-height: 1.8; }
+  .dark { color: #fff; background: #1d2927; }
+  .light { background: #e8e1d6; }
+  .green { color: #fff; background: #4d625b; }
+  .disclosure { padding: 10rem 0; text-align: center; background: #fff; }
+  .disclosure .container { max-width: 900px; }
+  .disclosure > .container > p:not(.kicker) { max-width: 680px; margin: 2rem auto; color: var(--color-muted); }
+  .disclosure a { display: inline-flex; gap: 1rem; padding-bottom: .4rem; border-bottom: 1px solid; text-decoration: none; font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  @media (max-width: 800px) {
+    .about-hero { min-height: 650px; }
+    .about-hero h1 { font-size: 3.3rem; }
+    .manifesto-grid, .principles { grid-template-columns: 1fr; }
+    .manifesto { padding: 6rem 0; }
+    .manifesto-grid { gap: 3rem; }
+    .manifesto h2, .disclosure h2 { font-size: 2.7rem; }
+    .principle { min-height: 420px; padding: 2rem; }
   }
 </style>
