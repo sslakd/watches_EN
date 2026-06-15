@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import products from '../data/products.json';
+import { creationWatchesSearchUrl } from '../utils/creationWatches.js';
 
 const visibleProducts = products.slice(0, 48);
-const creationWatchesUrl = (sku) =>
-  `https://www.creationwatches.com/products/search?keyword=${encodeURIComponent(sku)}`;
 const chapters = [
   { label: 'Everyday discoveries', title: 'Under $100', copy: 'Straightforward, characterful watches for daily life.', watches: products.filter((p) => p.price_usd > 0 && p.price_usd < 100).slice(0, 4) },
   { label: 'Considered value', title: '$100 to $300', copy: 'A richer balance of design, heritage, and capability.', watches: products.filter((p) => p.price_usd >= 100 && p.price_usd < 300).slice(0, 4) },
@@ -31,7 +30,7 @@ const chapters = [
         </div>
         <div class="chapter-watches">
           {chapter.watches.map((watch) => (
-            <a href={creationWatchesUrl(watch.sku)} target="_blank" rel="sponsored nofollow noopener noreferrer">
+            <a href={creationWatchesSearchUrl(watch.sku)} target="_blank" rel="sponsored nofollow noopener noreferrer">
               <img src={watch.image} alt={watch.name} loading="lazy" />
               <span>{watch.brand}</span>
               <strong>{watch.name}</strong>
@@ -50,7 +49,7 @@ const chapters = [
     </header>
     <div class="watch-grid">
       {visibleProducts.map((watch) => (
-        <a href={creationWatchesUrl(watch.sku)} class="watch-card" target="_blank" rel="sponsored nofollow noopener noreferrer">
+        <a href={creationWatchesSearchUrl(watch.sku)} class="watch-card" target="_blank" rel="sponsored nofollow noopener noreferrer">
           <div class="watch-image"><img src={watch.image} alt={watch.name} loading="lazy" /></div>
           <div class="watch-info">
             <span>{watch.brand}</span>
